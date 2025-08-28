@@ -1,12 +1,269 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pizzaria do Wagner 3</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Adote um Amigo</title>
+  <meta name="description" content="Landing page simples para adoção de animais. Encontre seu novo melhor amigo!" />
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --brand: #ff7a3d;
+      --brand-2: #ffb347;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --ring: rgba(255, 122, 61, .35);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.6;
+    }
+
+    /* Header / Hero */
+    header {
+      background: linear-gradient(135deg, var(--brand) 0%, var(--brand-2) 100%);
+      color: #fff;
+      padding: 56px 16px;
+      text-align: center;
+    }
+    header .wrap { max-width: 1040px; margin: 0 auto; }
+    header h1 { margin: 0 0 8px; font-size: clamp(28px, 4vw, 44px); letter-spacing: .3px; }
+    header p { margin: 0 auto; max-width: 720px; font-size: clamp(16px, 2.4vw, 18px); opacity: .95; }
+    .cta {
+      margin-top: 20px;
+      display: inline-block;
+      background: #fff;
+      color: var(--brand);
+      padding: 12px 18px;
+      border-radius: 999px;
+      font-weight: 700;
+      text-decoration: none;
+      box-shadow: 0 8px 24px rgba(0,0,0,.12);
+      transition: transform .15s ease, box-shadow .15s ease;
+    }
+    .cta:hover { transform: translateY(-1px); box-shadow: 0 12px 28px rgba(0,0,0,.16); }
+
+    /* Container */
+    .container { max-width: 1040px; margin: 28px auto; padding: 0 16px; }
+
+    /* Grid de animais */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 24px rgba(15,23,42,.06);
+      border: 1px solid #eef2f7;
+      display: flex; flex-direction: column;
+    }
+    .card img { width: 100%; height: 180px; object-fit: cover; display:block; }
+    .card-body { padding: 14px 14px 16px; }
+    .badge {
+      display: inline-block; font-size: 12px; padding: 2px 8px; border-radius: 999px; background:#fff3ea; color:#b45309; border:1px solid #ffead8; margin-bottom:6px;
+    }
+    .card h3 { margin: 6px 0 2px; font-size: 18px; }
+    .meta { font-size: 14px; color: var(--muted); margin: 0 0 8px; }
+    .desc { font-size: 14px; margin: 0 0 12px; }
+    .actions { margin-top: auto; display:flex; gap:8px; }
+    .btn { flex:1; text-align:center; text-decoration:none; font-weight:600; padding:10px 12px; border-radius:12px; border:1px solid #e5e7eb; background:#fff; color: var(--text); transition: box-shadow .15s ease, transform .08s ease; }
+    .btn:hover { transform: translateY(-1px); box-shadow: 0 8px 18px rgba(0,0,0,.09); }
+    .btn.primary { background: var(--brand); color:#fff; border-color: transparent; }
+
+    /* Seção: Como funciona */
+    .steps { display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap:16px; margin-top: 8px; }
+    .step { background: var(--card); border:1px solid #eef2f7; border-radius:14px; padding:16px; box-shadow: 0 8px 20px rgba(15,23,42,.05); }
+    .step h4 { margin: 0 0 6px; }
+    .step p { margin: 0; color: var(--muted); font-size: 14px; }
+
+    /* Formulário */
+    form { background: var(--card); border:1px solid #eef2f7; border-radius:16px; padding: 18px; box-shadow: 0 10px 24px rgba(15,23,42,.06); }
+    .f-row { display:grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    label { display:block; font-weight:600; font-size:14px; margin: 10px 0 6px; }
+    input, textarea, select {
+      width: 100%; padding: 12px; border: 1px solid #e5e7eb; border-radius: 12px; font: inherit; background:#fff;
+      outline: none; transition: box-shadow .15s ease, border-color .15s ease;
+    }
+    input:focus, textarea:focus, select:focus { border-color: var(--brand-2); box-shadow: 0 0 0 4px var(--ring); }
+    textarea { min-height: 120px; resize: vertical; }
+    .submit { margin-top: 14px; padding: 12px 16px; background: var(--brand); color:#fff; border:none; border-radius:14px; font-weight:700; cursor:pointer; }
+    .submit:hover { filter: brightness(.96); }
+    .hint { color: var(--muted); font-size: 13px; }
+
+    /* Rodapé */
+    footer { text-align:center; color: var(--muted); padding: 28px 12px 40px; }
+
+    /* Utilidades */
+    .section-title { margin: 8px 0 10px; font-size: clamp(22px, 3vw, 28px); }
+    .section-sub { margin: 0 0 18px; color: var(--muted); }
+    .split { display:grid; grid-template-columns: 1.2fr .8fr; gap: 16px; align-items: start; }
+
+    @media (max-width: 880px) {
+      .split { grid-template-columns: 1fr; }
+      .f-row { grid-template-columns: 1fr; }
+      .card img { height: 160px; }
+    }
+  </style>
 </head>
 <body>
-    <h1>Testando o nosso site 3</h1>
-    <h1>Wagner Castro</h1>
+  <header>
+    <div class="wrap">
+      <h1>Adote um Amigo</h1>
+      <p>Centenas de peludinhos esperando um lar. Adotar é um gesto de amor — encontre seu companheiro ideal e transforme duas vidas hoje mesmo.</p>
+      <a href="#formulario" class="cta" aria-label="Ir para formulário de adoção">Quero adotar agora</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Seção: Animais disponíveis -->
+    <section aria-labelledby="animais-titulo">
+      <h2 id="animais-titulo" class="section-title">Animais disponíveis</h2>
+      <p class="section-sub">Alguns dos nossos amigos esperando por você. Clique em "Tenho interesse" para falar pelo WhatsApp ou use o formulário ao final.</p>
+
+      <div class="grid">
+        <!-- Card 1 -->
+        <article class="card">
+          <img src="img/dog1.jpg" alt="Cachorro caramelo sentado, olhando para a câmera" />
+          <div class="card-body">
+            <span class="badge">Cachorro • 2 anos</span>
+            <h3>Rex</h3>
+            <p class="meta">Vacinado • Castrado • Porte médio</p>
+            <p class="desc">Carinhoso e brincalhão. Se dá bem com crianças.</p>
+            <div class="actions">
+              <a class="btn primary" href="#formulario">Tenho interesse</a>
+              <a class="btn" href="https://wa.me/5500000000000?text=Ol%C3%A1!%20Tenho%20interesse%20em%20adotar%20o%20Rex." target="_blank" rel="noopener">Falar no WhatsApp</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 2 -->
+        <article class="card">
+          <img src="img/cat1.jpg" alt="Gata tigrada deitada numa manta" />
+          <div class="card-body">
+            <span class="badge">Gata • 1 ano</span>
+            <h3>Mia</h3>
+            <p class="meta">Vacinada • Castrada • Calma</p>
+            <p class="desc">Dócil e independente, perfeita para apartamento.</p>
+            <div class="actions">
+              <a class="btn primary" href="#formulario">Tenho interesse</a>
+              <a class="btn" href="https://wa.me/5500000000000?text=Ol%C3%A1!%20Tenho%20interesse%20em%20adotar%20a%20Mia." target="_blank" rel="noopener">Falar no WhatsApp</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 3 -->
+        <article class="card">
+          <img src="img/dog2.jpg" alt="Filhote preto de orelhas em pé" />
+          <div class="card-body">
+            <span class="badge">Cachorro • 6 meses</span>
+            <h3>Thor</h3>
+            <p class="meta">Vacinado • Porte pequeno</p>
+            <p class="desc">Curioso e cheio de energia. Adora passeios.</p>
+            <div class="actions">
+              <a class="btn primary" href="#formulario">Tenho interesse</a>
+              <a class="btn" href="https://wa.me/5500000000000?text=Ol%C3%A1!%20Tenho%20interesse%20em%20adotar%20o%20Thor." target="_blank" rel="noopener">Falar no WhatsApp</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 4 -->
+        <article class="card">
+          <img src="img/cat2.jpg" alt="Gato branco e laranja olhando pela janela" />
+          <div class="card-body">
+            <span class="badge">Gato • 3 anos</span>
+            <h3>Simba</h3>
+            <p class="meta">Castrado • Muito carinhoso</p>
+            <p class="desc">Companheiro e falante. Gosta de colo e brinquedos.</p>
+            <div class="actions">
+              <a class="btn primary" href="#formulario">Tenho interesse</a>
+              <a class="btn" href="https://wa.me/5500000000000?text=Ol%C3%A1!%20Tenho%20interesse%20em%20adotar%20o%20Simba." target="_blank" rel="noopener">Falar no WhatsApp</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Seção: Como funciona -->
+    <section aria-labelledby="como-funciona" style="margin-top: 28px;">
+      <h2 id="como-funciona" class="section-title">Como funciona</h2>
+      <div class="steps">
+        <div class="step">
+          <h4>1) Escolha um amigo</h4>
+          <p>Navegue pelos perfis e veja qual combina com você e sua rotina.</p>
+        </div>
+        <div class="step">
+          <h4>2) Preencha o formulário</h4>
+          <p>Conte um pouco sobre você para iniciarmos o processo com segurança.</p>
+        </div>
+        <div class="step">
+          <h4>3) Conversa e visita</h4>
+          <p>Entraremos em contato para tirar dúvidas e agendar a adoção.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Seção: Formulário -->
+    <section id="formulario" aria-labelledby="form-titulo" style="margin-top: 28px;">
+      <h2 id="form-titulo" class="section-title">Formulário de interesse</h2>
+      <p class="section-sub">Responda rapidamente e retornaremos por e-mail ou WhatsApp.</p>
+
+      <!-- Dica: troque a URL de action pelo endpoint do Formspree (ex.: https://formspree.io/f/SEU_CODIGO) -->
+      <form action="#" method="post">
+        <div class="f-row">
+          <div>
+            <label for="nome">Seu nome</label>
+            <input id="nome" name="nome" type="text" placeholder="Ex.: Maria Silva" autocomplete="name" required />
+          </div>
+          <div>
+            <label for="email">Seu e-mail</label>
+            <input id="email" name="email" type="email" placeholder="voce@email.com" autocomplete="email" required />
+          </div>
+        </div>
+
+        <div class="f-row">
+          <div>
+            <label for="telefone">WhatsApp (opcional)</label>
+            <input id="telefone" name="telefone" type="tel" placeholder="(11) 90000-0000" autocomplete="tel" />
+          </div>
+          <div>
+            <label for="animal">Animal de interesse</label>
+            <select id="animal" name="animal">
+              <option value="Rex">Rex</option>
+              <option value="Mia">Mia</option>
+              <option value="Thor">Thor</option>
+              <option value="Simba">Simba</option>
+              <option value="Outro">Outro</option>
+            </select>
+          </div>
+        </div>
+
+        <label for="mensagem">Mensagem</label>
+        <textarea id="mensagem" name="mensagem" placeholder="Conte um pouco sobre você e sua rotina."></textarea>
+
+        <button class="submit" type="submit">Enviar pedido de adoção</button>
+        <p class="hint">Dica: para receber os envios no seu e-mail, use um serviço como o <strong>Formspree</strong> e cole o link no atributo <code>action</code> acima.</p>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>© <span id="ano"></span> Adote um Amigo • Feito com ♥</p>
+  </footer>
+
+  <script>
+    // Atualiza o ano automaticamente
+    document.getElementById('ano').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
